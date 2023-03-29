@@ -17,16 +17,28 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022",
+    "module": "es6",
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "typeRoots": [
+      "./src/app/core/modules/WebSdk",
+      "./node_modules/@types"
+    ],
+    "types": ["./src/app/core/modules/WebSdk"],
+    "allowJs": true,
+    "paths": {
+      "crypto":[
+        "./node_modules/crypto-browserify"
+      ]
+    }
   },
+  "include": ["./src/app/core/modules/WebSdk"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
+    "strictInjectionParameters": false,//esto es clave para que funcione
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   }
