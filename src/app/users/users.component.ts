@@ -14,4 +14,16 @@ export class UsersComponent {
       this.users = val;
     });
   }
+  previouspage(){
+    this.requests.getUsers(this.users.previous).subscribe(val=>{
+      console.log(val);
+      this.users = val;
+    });
+  }
+  nextpage(){
+    this.requests.getUsers(this.users.next).subscribe(val=>{
+      console.log(val);
+      this.users = val;
+    });
+  }
 }

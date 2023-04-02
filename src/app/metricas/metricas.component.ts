@@ -1,5 +1,6 @@
-import '../core/modules/WebSdk';
-import { Component, ChangeDetectorRef, Input, OnInit, OnDestroy, ViewChild, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { RequestsService } from '../requests/requests.service';
 
 import { 
   FingerprintReader,
@@ -10,39 +11,22 @@ import {
   AcquisitionStarted,
   AcquisitionStopped
 } from "@digitalpersona/devices";
-import { RequestsService } from '../requests/requests.service';
 
 @Component({
-  selector: 'app-tickeador',
-  templateUrl: './tickeador.component.html',
-  styleUrls: ['./tickeador.component.css']
+  selector: 'app-metricas',
+  templateUrl: './metricas.component.html',
+  styleUrls: ['./metricas.component.css']
 })
-export class TickeadorComponent implements OnInit, OnDestroy {
-  
+export class MetricasComponent implements OnInit, OnDestroy  {
   private reader: FingerprintReader;
   CurrentImageFinger: string;
-  currentDate: string;
-  UserIdentifi:any;
-  constructor(private requests: RequestsService){
+  params: any;
+  constructor(private route: ActivatedRoute, private request: RequestsService) {
     this.reader = new FingerprintReader();
     this.CurrentImageFinger = "./assets/blanco.jpg"
-    this.currentDate = this.muestraReloj();
-    this.UserIdentifi = null;
-    setInterval(()=>{
-      this.currentDate = this.muestraReloj()
-    }, 1000);
-  }
-
-  muestraReloj(){
-    var fechaHora = new Date();
-    var horas = fechaHora.getHours();
-    var minutos = fechaHora.getMinutes();
-    var segundos = fechaHora.getSeconds();
-    var horaactual="";
-    horas < 10 ? horaactual = horaactual + '0' + horas +":" : horaactual = horaactual + horas + ":";
-    minutos < 10 ? horaactual = horaactual + '0' + minutos +":" : horaactual = horaactual + minutos + ":";
-    segundos < 10 ? horaactual = horaactual + '0' + segundos : horaactual = horaactual + segundos;
-    return horaactual;
+    this.route.params.subscribe(params=>{
+      this.params = params
+    });
   }
 
   private onDeviceConnect = (event: DeviceConnected)=>{console.log("conectado")};
@@ -62,14 +46,10 @@ export class TickeadorComponent implements OnInit, OnDestroy {
     console.log("3");
     console.log(event);
     this.CurrentImageFinger = "data:image/png;base64," + this.fn_fixFormatImageBase64(event.samples[0]);
-    this.requests.posFingerPrint(this.dataURLtoFile(this.CurrentImageFinger, "fingerimage.png")).subscribe(res=>{
-      console.log(res);
-      if(Object.keys(res).length!==0)
-        this.UserIdentifi = res;
-      else
-        this.UserIdentifi = undefined;
-    },err=>{
-      console.log(err);
+    this.request.posMetricas( String(this.params.id),  this.dataURLtoFile(this.CurrentImageFinger, new Date().toString()+".png")).subscribe(res=>{
+      console.log(res)
+    }, err=>{
+      console.log(err)
     });
   };
 

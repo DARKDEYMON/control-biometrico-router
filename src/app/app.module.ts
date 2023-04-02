@@ -8,13 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { HttpClientModule } from '@angular/common/http';
 import "./core/modules/WebSdk";
+import { MetricasComponent } from './metricas/metricas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TickeadorComponent,
     HomeComponent,
-    UsersComponent
+    UsersComponent,
+    MetricasComponent
   ],
   imports: [
     BrowserModule,

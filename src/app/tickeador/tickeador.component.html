@@ -100,7 +100,7 @@
             <div class="card">
               <div class="card-body">
                 <h1 class="text-center">
-                  {{ UserIdentifi || UserIdentifi===undefined ? UserIdentifi.first_name + " " +UserIdentifi.last_name :"No existe el registro"}}
+                  {{ UserIdentifi || UserIdentifi ? UserIdentifi.first_name + " " +UserIdentifi.last_name :"No existe el registro"}}
                 </h1>
               </div>
             </div>
