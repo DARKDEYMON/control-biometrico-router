@@ -89,6 +89,7 @@ export class TickeadorComponent implements OnInit, OnDestroy {
     this.reader.off("AcquisitionStarted",this.onAcquisitionStarted);
     this.reader.off("AcquisitionStopped",this.onAcquisitionStopped);
     this.reader.off("SamplesAcquired",this.onSamplesAcquired);
+    this.reader.stopAcquisition()
   }
   fn_ListaDipositivos(){
     return Promise.all([
